@@ -12,50 +12,50 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import Entities.Player;
-import Level.Level;
+import Level.LevelClass;
 
 public class Game extends Canvas implements Runnable {
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	private Thread AcreageThread;
+	private Thread				AcreageThread;
 
-	private InputHandler input;
-	private GameResourceLoader res;
-	private Level level;
-	private Player player;
-	private Inventory inv;
-	private Debug debug;
+	private InputHandler		input;
+	private GameResourceLoader	res;
+	public LevelClass	level;
+	private Player				player;
+	private Inventory			inv;
+	private Debug				debug;
 
-	public Point mouseP = new Point(-1, -1);
+	public Point				mouseP				= new Point(-1, -1);
 
-	private static boolean running = false;
-	private static final String TITLE = "Acreage In-Dev 0.0.8";
-	private final int WIDTH = 640;
-	private final int HEIGHT = 480;
-	BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-	private final Dimension gameDim = new Dimension(WIDTH, HEIGHT);
-	JFrame frame;
+	private static boolean		running				= false;
+	private static final String	TITLE				= "Acreage In-Dev 0.0.8";
+	private final int			WIDTH				= 640;
+	private final int			HEIGHT				= 480;
+	BufferedImage				image				= new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+	private final Dimension		gameDim				= new Dimension(WIDTH, HEIGHT);
+	JFrame						frame;
 
-	public int worldWidth = 350;
-	public int worldHeight = 350;
+	public int					worldWidth			= 350;
+	public int					worldHeight			= 350;
 
-	public int xOffset = 0;
-	public int yOffset = 0;
+	public int					xOffset				= 0;
+	public int					yOffset				= 0;
 
 	// Variables for the FPS and UPS counter
-	private int ticks = 0;
-	private int frames = 0;
-	private int FPS = 0;
-	private int UPS = 0;
-	public double delta;
+	private int					ticks				= 0;
+	private int					frames				= 0;
+	private int					FPS					= 0;
+	private int					UPS					= 0;
+	public double				delta;
 
 	// Options
-	boolean showDebug = false;
-	public boolean showGrid = false;
+	boolean						showDebug			= false;
+	public boolean				showGrid			= false;
 
 	// Used in the "run" method to limit the frame rate to the UPS
-	boolean limitFrameRate = false;
-	boolean shouldRender;
+	boolean						limitFrameRate		= false;
+	boolean						shouldRender;
 
 	@Override
 	public void run() {
@@ -113,6 +113,13 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public Game() { // Typical stuff
+		createFrame();
+		requestFocus();
+
+		init();
+	}
+
+	private void createFrame() {
 		setMinimumSize(gameDim);
 		setMaximumSize(gameDim);
 		setPreferredSize(gameDim);
@@ -127,16 +134,12 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-
-		requestFocus();
-		
-		init();
 	}
 
 	private void init() {
 		setRes(new GameResourceLoader());
 		setInput(new InputHandler(this));
-		level = new Level(this);
+		level = new LevelClass(this);
 		setPlayer(new Player(this));
 		setInv(new Inventory(this));
 		debug = new Debug(this);
@@ -177,7 +180,7 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-	
+
 	// Getters and Setters
 	// Do not venture past this point!
 

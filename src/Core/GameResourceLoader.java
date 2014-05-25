@@ -6,27 +6,27 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class GameResourceLoader {
-	public static byte Dirt = 0;
-	public static byte Plowed = 1;
-	public static byte Stone = 2;
-	public static byte Grass = 3;
-	public static byte Rock = 4;
-	public static byte Tree = 5;
-	public static byte Metal = 6;
-	public static byte road = 7;
-	public static byte logWall = 8;
+	public static int		Dirt			= 0;
+	public static int		Plowed			= 1;
+	public static int		Stone			= 2;
+	public static int		Grass			= 3;
+	public static int		Rock			= 4;
+	public static int		Tree			= 5;
+	public static int		Metal			= 6;
+	public static int		road			= 7;
+	public static int		logWall			= 8;
 
-	public BufferedImage tileMap; // All tiles in one image to be separated
-	public BufferedImage tiles[] = new BufferedImage[10]; // Each separate tile
+	public BufferedImage	tileMap;									// All tiles in one image to be separated
+	public BufferedImage	tiles[]			= new BufferedImage[10];	// Each separate tile
 
-	public BufferedImage plantMap;
-	public BufferedImage plants[] = new BufferedImage[5];
+	public BufferedImage	plantMap;
+	public BufferedImage	plants[]		= new BufferedImage[5];
 
-	public BufferedImage playerMap;
-	public BufferedImage playerFaces[] = new BufferedImage[4];
+	public BufferedImage	playerMap;
+	public BufferedImage	playerFaces[]	= new BufferedImage[4];
 
-	public BufferedImage toolMap;
-	public BufferedImage tools[] = new BufferedImage[5];
+	public BufferedImage	toolMap;
+	public BufferedImage	tools[]			= new BufferedImage[5];
 
 	public GameResourceLoader() {
 		loadImages();
@@ -36,7 +36,7 @@ public class GameResourceLoader {
 		try {
 			// Load tiles
 			tileMap = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("Tiles.png")); // Grab the tilemap
-			
+
 			for (byte i = 0; i < tiles.length; i++) { // For every tile that there should be
 				tiles[i] = tileMap.getSubimage(i * 32, 0, 32, 32); // Create a subimage from tile map, and store it as a separate image
 			}

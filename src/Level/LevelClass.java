@@ -7,22 +7,45 @@ import Core.Game;
 import Core.GameResourceLoader;
 import Entities.Player;
 
-public class Level {
-	Game	game;
-	Tile	tiles[];
+public class LevelClass {
+	Game		game;
+	public Tile	tiles[];
 
-	public Level(Game game) {
+	public LevelClass(Game game) {
 		this.game = game;
 		tiles = new Tile[game.worldWidth * game.worldHeight];
-		long beginTime = System.currentTimeMillis();
-		generateLevel();
-		long endTime = System.currentTimeMillis();
-		long resultTime = endTime - beginTime;
-		System.out.println("It took " + resultTime + "ms to generate the level!");
 	} // End constructor
+
+	public void generateLevel(int[] tileIDs) {
+		int x = 0, y = 0;
+
+		for (int i = 0; i < 350 * 350; i++) {
+			switch (tileIDs[i]) { // Random int from 0 - 2, use as tileID
+			case 0:
+				tiles[i] = new DirtTile(x * 32, y * 32, game); // Place dirt
+				break;
+			case 1:
+				tiles[i] = new StoneTile(x * 32, y * 32, game); // Place stone
+				break;
+			case 2:
+				tiles[i] = new GrassTile(x * 32, y * 32, game); // Place grass
+				break;
+			default:
+				tiles[i] = new GrassTile(x * 32, y * 32, game); // Place grass
+				break;
+			}
+			x++;
+			if (x == game.worldWidth) {
+				x = 0;
+				y++;
+			}
+		}
+	}
 
 	public void generateLevel() {
 		// Tile generator
+
+		long beginTime = System.currentTimeMillis();
 
 		int x = 0, y = 0;
 
@@ -47,6 +70,10 @@ public class Level {
 				y++;
 			}
 		}
+
+		long endTime = System.currentTimeMillis();
+		long resultTime = endTime - beginTime;
+		System.out.println("It took " + resultTime + "ms to generate the level!");
 	} // End generateLevel
 
 	public void updateLevel(Game game) {
@@ -54,7 +81,7 @@ public class Level {
 
 		for (Tile t : tiles) {
 			t.tick(game);
-			
+
 			if (game.getInput().rightButton && t.isContainsMouse())
 				rightClick(t);
 
@@ -126,9 +153,7 @@ public class Level {
 			}
 			break;
 		case 2: // Stone
-			if (tile.isHasRock() && Player.toolSelected != Player.Pickaxe && !tile.isHasOre()) {
-				game.getInv().addResource(game.getInv().stoneID, 1);
-			} else if (Player.toolSelected == Player.Pickaxe && !tile.isHasOre()) {
+			if (tile.isHasRock() && Player.toolSelected == Player.Pickaxe && !tile.isHasOre()) {
 				game.getInv().addResource(game.getInv().stoneID, 1);
 				tile.setHasRock(false);
 			} else if (tile.isHasOre() && Player.toolSelected == Player.Pickaxe) {
