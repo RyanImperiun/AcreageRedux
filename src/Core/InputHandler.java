@@ -148,8 +148,14 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		toggle(e, true);
 
 		// Misc
-		if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		if (e.getKeyCode() == KeyEvent.VK_END)
 			System.exit(0);
+		
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			game.frame.dispose();
+			game.write.writeFile();
+			new Launcher();
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {

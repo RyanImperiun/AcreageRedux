@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 import Entities.Player;
+import FileManagement.Writing;
 import Level.LevelClass;
 
 public class Game extends Canvas implements Runnable {
@@ -21,14 +22,15 @@ public class Game extends Canvas implements Runnable {
 
 	private InputHandler		input;
 	private GameResourceLoader	res;
-	public LevelClass	level;
+	public LevelClass			level;
 	private Player				player;
 	private Inventory			inv;
 	private Debug				debug;
+	public Writing				write;
 
 	public Point				mouseP				= new Point(-1, -1);
 
-	private static boolean		running				= false;
+	public boolean				running				= false;
 	private static final String	TITLE				= "Acreage In-Dev 0.0.8";
 	private final int			WIDTH				= 640;
 	private final int			HEIGHT				= 480;
@@ -107,7 +109,7 @@ public class Game extends Canvas implements Runnable {
 		AcreageThread.start();
 	}
 
-	public static synchronized void stop() {
+	public synchronized void stop() {
 		running = false;
 		System.exit(0);
 	}
@@ -143,6 +145,7 @@ public class Game extends Canvas implements Runnable {
 		setPlayer(new Player(this));
 		setInv(new Inventory(this));
 		debug = new Debug(this);
+		write = new Writing("C:/Users/Ryan/Desktop/temp.txt", this);
 	}
 
 	public void tick() {

@@ -4,18 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Inventory {
-	Game game;
-	public byte itemSelected = 0;
+	Game		game;
+	public int	itemSelected		= 0;
 
-	public byte seedID = 0;
-	public byte wheatID = 1;
-	public byte stoneID = 2;
-	public byte stickID = 3;
-	public byte lumberID = 4;
-	public byte oreID = 5;
+	public int	seedID				= 0;
+	public int	wheatID				= 1;
+	public int	stoneID				= 2;
+	public int	stickID				= 3;
+	public int	lumberID			= 4;
+	public int	oreID				= 5;
 
-	public short resourceAmounts[] = { 100, 0, 0, 0, 0, 0 };
-	String resourceNames[] = { "Seed", "Wheat", "Stone", "Sticks", "Lumber", "Ore" };
+	public int	resourceAmounts[]	= { 100, 0, 0, 0, 0, 0 };
+	String		resourceNames[]		= { "Seed", "Wheat", "Stone", "Sticks", "Lumber", "Ore" };
 
 	public Inventory(Game game) {
 		this.game = game;

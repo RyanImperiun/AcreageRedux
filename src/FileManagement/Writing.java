@@ -7,17 +7,22 @@ import java.io.IOException;
 import Core.Game;
 
 public class Writing {
+	String	file;
 	Game	g;
 
 	public Writing(String filePath, Game game) {
+		file = filePath;
 		g = game;
 
 		// The name of the file to open. --- C:/Users/Ryan/Desktop/temp.txt --
+	}
+
+	public void writeFile() {
 		long beforeTime = System.currentTimeMillis();
 
 		try {
 			// Assume default encoding.
-			FileWriter fileWriter = new FileWriter(filePath);
+			FileWriter fileWriter = new FileWriter(file);
 
 			// Always wrap FileWriter in BufferedWriter.
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -31,7 +36,7 @@ public class Writing {
 			// Always close files.
 			bufferedWriter.close();
 		} catch (IOException ex) {
-			System.out.println("Error writing to file " + filePath);
+			System.out.println("Error writing to file " + file);
 		}
 
 		long afterTime = System.currentTimeMillis();
