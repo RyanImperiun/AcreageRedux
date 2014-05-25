@@ -11,12 +11,14 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities.Player;
+
 public class InputHandler implements KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
 	public class Key {
 
-		public boolean down, clicked;
-		private short absorbs, presses;
+		public boolean	down, clicked;
+		private short	absorbs, presses;
 
 		public void tick() {
 			if (absorbs < presses) {
@@ -42,23 +44,22 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		}
 	}
 
-	Game game;
+	Game				game;
+	Point				mouseP;
 
-	Point mouseP;
+	public List<Key>	keys		= new ArrayList<Key>();
 
-	public List<Key> keys = new ArrayList<Key>();
+	public Key			left		= new Key();
+	public Key			right		= new Key();
+	public Key			up			= new Key();
+	public Key			down		= new Key();
+	public Key			I			= new Key();
 
-	public Key left = new Key();
-	public Key right = new Key();
-	public Key up = new Key();
-	public Key down = new Key();
-	public Key I = new Key();
+	public Key			itemUp		= new Key();
+	public Key			itemDown	= new Key();
 
-	public Key itemUp = new Key();
-	public Key itemDown = new Key();
-
-	public boolean leftButton = false;
-	public boolean rightButton = false;
+	public boolean		leftButton	= false;
+	public boolean		rightButton	= false;
 
 	public InputHandler(Game game) {
 		game.addMouseListener(this);
@@ -115,8 +116,18 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL && e.getWheelRotation() > 0) { // If scrolling down
-		} else if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL && e.getWheelRotation() < 0) { // If scrolling up
+		if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL && e.getWheelRotation() < 0) { // If scrolling up
+			if (game.inv.itemSelected < game.inv.resourceAmounts.length) {
+				game.inv.itemSelected++;
+			} else {
+				game.inv.itemSelected = 0;
+			}
+		} else if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL && e.getWheelRotation() > 0) { // If scrolling down
+			if (game.inv.itemSelected > 0) {
+				game.inv.itemSelected--;
+			} else {
+				game.inv.itemSelected = game.inv.resourceAmounts.length;
+			}
 		}
 	}
 
@@ -150,12 +161,30 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 		// Misc
 		if (e.getKeyCode() == KeyEvent.VK_END)
 			System.exit(0);
-		
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			game.frame.dispose();
 			game.write.saveAllFiles();
 			new Launcher();
 		}
+		
+		// Select Tools
+		if(e.getKeyCode() == KeyEvent.VK_1){
+			Player.toolSelected = Player.Axe;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_2){
+			Player.toolSelected = Player.Pickaxe;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_3){
+			Player.toolSelected = Player.Hoe;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_4){
+			Player.toolSelected = Player.Shovel;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_5){
+			Player.toolSelected = Player.Hand;
+		}
+		
 	}
 
 	public void keyReleased(KeyEvent e) {

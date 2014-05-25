@@ -13,7 +13,7 @@ public class Inventory {
 	public int	stickID				= 3;
 	public int	lumberID			= 4;
 	public int	oreID				= 5;
-
+	
 	public int	resourceAmounts[]	= { 100, 0, 0, 0, 0, 0 };
 	String		resourceNames[]		= { "Seed", "Wheat", "Stone", "Sticks", "Lumber", "Ore" };
 

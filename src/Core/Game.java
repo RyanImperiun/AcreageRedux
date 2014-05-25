@@ -205,11 +205,12 @@ public class Game extends Canvas implements Runnable {
 		if (showDebug)
 			debug.render(g);
 
+		g.setColor(Color.WHITE);
+		g.fillRect(103, 0, 160, 33);
+		g.drawImage(getRes().toolMap, 103, 0, this);
 		g.setColor(Color.BLACK);
-		g.fillRect(32 + 68, 0, 32 * 5, 33);
-		g.drawImage(getRes().toolMap, 32 + 68, 0, this);
+		g.drawRect((Player.toolSelected * 32) + 71, 0, 32, 32);
 		// Draw tool selected at mouse location
-		g.drawRect(Player.toolSelected * 32 + 68, 0, 32, 32);
 		g.drawImage(getRes().tools[Player.toolSelected - 1], mouseP.x, mouseP.y, this);
 
 		g.dispose();

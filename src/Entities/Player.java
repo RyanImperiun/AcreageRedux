@@ -7,40 +7,40 @@ import java.awt.Rectangle;
 import Core.Game;
 
 public class Player {
-	Game game;
+	Game					game;
 
-	private int x, y;
-	private int worldX, worldY;
-	private int tileX, tileY;
-	private int width = 32;
-	private int height = 32;
+	private int				x, y;
+	private int				worldX, worldY;
+	private int				tileX, tileY;
+	private int				width			= 32;
+	private int				height			= 32;
 
-	public Rectangle bounding;
-	double speed = 2;
+	public Rectangle		bounding;
+	double					speed			= 2;
 
-	public boolean canAffectTile = true;
-	public Point playerCenter;
+	public boolean			canAffectTile	= true;
+	public Point			playerCenter;
 
 	// Tools
-	public static byte toolSelected = 1; // 1 = Axe, 2 = Pickaxe, 3 = Hoe, 4 = Shovel, 5 = Hand
-	public static final byte Axe = 1;
-	public static final byte Pickaxe = 2;
-	public static final byte Hoe = 3;
-	public static final byte Shovel = 4;
-	public static final byte Hand = 5;
+	public static int		toolSelected	= 1;	// 1 = Axe, 2 = Pickaxe, 3 = Hoe, 4 = Shovel, 5 = Hand
+	public static final int	Axe				= 1;
+	public static final int	Pickaxe			= 2;
+	public static final int	Hoe				= 3;
+	public static final int	Shovel			= 4;
+	public static final int	Hand			= 5;
 
 	// Moving
-	public byte directionFacing = 0; // 0 = Down, 1 = Up, 2 = Left, 3 = Right
-	public byte Down = 0;
-	public byte Up = 1;
-	public byte Left = 2;
-	public byte Right = 3;
+	public int				directionFacing	= 0;	// 0 = Down, 1 = Up, 2 = Left, 3 = Right
+	public int				Down			= 0;
+	public int				Up				= 1;
+	public int				Left			= 2;
+	public int				Right			= 3;
 
 	// Collision Booleans
-	public boolean canLeft = true;
-	public boolean canRight = true;
-	public boolean canUp = true;
-	public boolean canDown = true;
+	public boolean			canLeft			= true;
+	public boolean			canRight		= true;
+	public boolean			canUp			= true;
+	public boolean			canDown			= true;
 
 	public Player(Game game) {
 		this.game = game;
@@ -117,7 +117,7 @@ public class Player {
 	public void render(Graphics g) {
 		g.drawImage(game.getRes().playerFaces[directionFacing], x, y, game);
 	}
-	
+
 	// Getters and Setters
 
 	public int getTileX() {
