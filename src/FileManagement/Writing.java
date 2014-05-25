@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import Core.Game;
+import Core.GameResourceLoader;
 
 public class Writing {
 	String	home	= System.getProperty("user.home");
@@ -52,7 +53,43 @@ public class Writing {
 	}
 
 	private void saveWorldPeripherals() {
+		String writePath = dir + "/worldPeripherals.txt";
+		long beforeTime = System.currentTimeMillis();
 
+		try {
+			// Assume default encoding.
+			FileWriter fileWriter = new FileWriter(writePath);
+
+			// Always wrap FileWriter in BufferedWriter.
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			String toWrite = "";
+			for (int i = 0; i < g.level.tiles.length; i++) {
+				if (g.level.tiles[i].getTileID() == GameResourceLoader.Stone && g.level.tiles[i].hasRock) {
+					if (!g.level.tiles[i].hasOre) {
+						toWrite = "1";
+					} else {
+						toWrite = "2";
+					}
+				}else if(g.level.tiles[i].getTileID() == GameResourceLoader.Grass && g.level.tiles[i].hasTree){
+					toWrite = "3";
+				}else{
+					toWrite="0";
+				}
+				
+				bufferedWriter.write(toWrite);
+				bufferedWriter.newLine();
+			}
+
+			// Always close files.
+			bufferedWriter.close();
+		} catch (IOException ex) {
+			System.out.println("Error writing to file " + writePath);
+		}
+
+		long afterTime = System.currentTimeMillis();
+		long totalTime = afterTime - beforeTime;
+		System.out.println("Peripherals saved in " + totalTime + " ms");
 	}
 
 	private void saveWorld() {

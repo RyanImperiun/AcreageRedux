@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -21,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 	private Thread				AcreageThread;
 
 	private InputHandler		input;
-	private GameResourceLoader	res;
+	public GameResourceLoader	res;
 	public LevelClass			level;
 	private Player				player;
 	public Inventory			inv;
@@ -141,6 +143,31 @@ public class Game extends Canvas implements Runnable {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		
+		frame.addWindowListener(new WindowListener(){
+
+			public void windowActivated(WindowEvent arg0) {
+			}
+
+			public void windowClosed(WindowEvent arg0) {
+			}
+
+			public void windowClosing(WindowEvent e) {
+				write.saveAllFiles();
+			}
+
+			public void windowDeactivated(WindowEvent arg0) {
+			}
+
+			public void windowDeiconified(WindowEvent arg0) {
+			}
+
+			public void windowIconified(WindowEvent arg0) {
+			}
+
+			public void windowOpened(WindowEvent arg0) {
+			}
+		});
 	}
 
 	private void init() {

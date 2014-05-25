@@ -68,12 +68,14 @@ public class Launcher extends JFrame implements ActionListener {
 			Game g = new Game();
 			g.level.generateLevel();
 			g.start();
+			dispose();
 		} else if (e.getSource() == loadGame) {
 			String home = System.getProperty("user.home");
 			readFile = new Reading(home + "/Desktop/temp.txt");
 			Game g = new Game();
-			g.level.generateLevel(Launcher.readFile.fileTileID);
+			g.level.generateLevel(Launcher.readFile.fileTileID, Launcher.readFile.fileTilePeripherals);
 			g.start();
+			dispose();
 		} else if (e.getSource() == exit) {
 			System.exit(0);
 		}

@@ -16,7 +16,32 @@ public class LevelClass {
 		tiles = new Tile[game.worldWidth * game.worldHeight];
 	} // End constructor
 
-	public void generateLevel(int[] tileIDs) {
+	private void determinePeripherals(Tile t, int periphID) {
+		switch (periphID) {
+		case 0:
+			t.hasTree = false;
+			t.hasRock = false;
+			t.hasOre = false;
+			break;
+		case 1:
+			t.hasTree = false;
+			t.hasRock = true;
+			t.hasOre = false;
+			break;
+		case 2:
+			t.hasTree = false;
+			t.hasRock = true;
+			t.hasOre = true;
+			break;
+		case 3:
+			t.hasTree = true;
+			t.hasRock = false;
+			t.hasOre = false;
+			break;
+		}
+	}
+
+	public void generateLevel(int[] tileIDs, int[] tilePeriph) {
 		int x = 0, y = 0;
 
 		for (int i = 0; i < 350 * 350; i++) {
@@ -24,14 +49,17 @@ public class LevelClass {
 			case 0:
 				tiles[i] = new DirtTile(x * 32, y * 32, game); // Place dirt
 				break;
-			case 1:
-				tiles[i] = new StoneTile(x * 32, y * 32, game); // Place stone
-				break;
 			case 2:
+				tiles[i] = new StoneTile(x * 32, y * 32, game); // Place stone
+				determinePeripherals(tiles[i], tilePeriph[i]);
+				break;
+			case 3:
 				tiles[i] = new GrassTile(x * 32, y * 32, game); // Place grass
+				determinePeripherals(tiles[i], tilePeriph[i]);
 				break;
 			default:
 				tiles[i] = new GrassTile(x * 32, y * 32, game); // Place grass
+				determinePeripherals(tiles[i], tilePeriph[i]);
 				break;
 			}
 			x++;
@@ -93,9 +121,6 @@ public class LevelClass {
 	private void rightClick(Tile tile) { // if Right click
 		switch (Player.toolSelected) {
 		case 1: // Axe
-			if (tile.isHasWall()) {
-				tile.setHasWall(false);
-			}
 			break;
 		case 2: // Pickaxe
 			if (tile.getTileID() == GameResourceLoader.Stone && !tile.isHasRock()) {
@@ -127,13 +152,6 @@ public class LevelClass {
 					tile.setHasOre(false);
 				}
 			}
-			if (game.getInv().itemSelected == game.getInv().lumberID && game.getInv().resourceAmounts[game.getInv().lumberID] > 0 && !tile.isHasWall()) {
-				if (!tile.isHasRock() && !tile.isHasTree() && tile.getTileID() != GameResourceLoader.Plowed) { // If the tile is not stone and does not have a tree
-					tile.setHasWall(true);
-					game.getInv().addResource(game.getInv().lumberID, -1);
-				}
-			}
-
 		}
 		game.getInput().rightButton = false;
 	}

@@ -47,12 +47,10 @@ public class GrassTile extends Tile {
 
 	@Override
 	public void render(Graphics g) {
-		if (!isHasTree() && !isHasWall()) {
-			g.drawImage(game.getRes().tiles[getTileID()], getX(), getY(), game);
-		} else if (isHasTree()) {
+		if (isHasTree()) {
 			g.drawImage(game.getRes().tiles[GameResourceLoader.Tree], getX(), getY(), game);
-		} else if (isHasWall()) {
-			g.drawImage(game.getRes().tiles[GameResourceLoader.logWall], getX(), getY(), game);
+		} else {
+			g.drawImage(game.getRes().tiles[GameResourceLoader.Grass], getX(), getY(), game);
 		}
 
 		if (game.showGrid) { // If the player wants to draw grids

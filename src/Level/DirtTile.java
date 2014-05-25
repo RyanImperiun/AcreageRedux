@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Core.Game;
-import Core.GameResourceLoader;
 
 public class DirtTile extends Tile {
 
@@ -38,9 +37,6 @@ public class DirtTile extends Tile {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(game.getRes().tiles[getTileID()], getX(), getY(), game);
-		if (isHasWall()) {
-			g.drawImage(game.getRes().tiles[GameResourceLoader.logWall], getX(), getY(), game);
-		}
 
 		if (game.showGrid) { // If the player wants to draw grids
 			g.setColor(Color.WHITE); // White color

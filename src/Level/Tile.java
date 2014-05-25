@@ -6,31 +6,30 @@ import java.awt.Rectangle;
 import Core.Game;
 
 public abstract class Tile {
-	private Rectangle tileBoundaries;
+	private Rectangle	tileBoundaries;
 
-	Game game;
-	private int x, y, tileX, tileY;
-	private int tileID;
-	private int oX, oY; // Original x,y coordinates when created
-	private final int tileSize = 32; // Size of tiles
+	Game				game;
+	private int			x, y, tileX, tileY;
+	private int			tileID;
+	private int			oX, oY;				// Original x,y coordinates when created
+	private final int	tileSize	= 32;		// Size of tiles
 
-	private boolean canAffect = true;
+	private boolean		canAffect	= true;
 
 	// Plowed tile
-	boolean hasPlants = false;
-	private int plantGrowth = 0;
-	private int growthTime = 4;
+	boolean				hasPlants	= false;
+	private int			plantGrowth	= 0;
+	private int			growthTime	= 4;
 
 	// Used for other images
-	private boolean hasRock = false; // Stone tile
-	private boolean hasOre = false; // Stone tile
-	private int oreAmount = 0; // Amount of Ore, if any within Vein
-	private boolean hasTree = false; // Grass tile
-	private boolean hasWall = false;
+	public boolean		hasRock		= false;	// Stone tile
+	public boolean		hasOre		= false;	// Stone tile
+	private int			oreAmount	= 0;		// Amount of Ore, if any within Vein
+	public boolean		hasTree		= false;	// Grass tile
 
 	// Misc
-	public boolean isVisible; // If the tile is within the JFrame area
-	protected boolean containsMouse; // If the tile has the mouse in it
+	public boolean		isVisible;				// If the tile is within the JFrame area
+	protected boolean	containsMouse;			// If the tile has the mouse in it
 
 	public abstract void tick(Game game);
 
@@ -43,8 +42,8 @@ public abstract class Tile {
 			isVisible = false;
 		}
 	}
-	
-	protected void setTilePos(){
+
+	protected void setTilePos() {
 		setTileX(x / 32);
 		setTileY(y / 32);
 	}
@@ -129,14 +128,6 @@ public abstract class Tile {
 
 	public void setHasTree(boolean hasTree) {
 		this.hasTree = hasTree;
-	}
-
-	public boolean isHasWall() {
-		return hasWall;
-	}
-
-	public void setHasWall(boolean hasWall) {
-		this.hasWall = hasWall;
 	}
 
 	public boolean isContainsMouse() {
