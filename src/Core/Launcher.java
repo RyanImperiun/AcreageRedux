@@ -41,7 +41,6 @@ public class Launcher extends JFrame implements ActionListener {
 		setTitle("Acreage Menu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-
 	}
 
 	private void addButtons() {

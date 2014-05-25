@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
 	private GameResourceLoader	res;
 	public LevelClass			level;
 	private Player				player;
-	private Inventory			inv;
+	public Inventory			inv;
 	private Debug				debug;
 	public Writing				write;
 
@@ -111,6 +111,11 @@ public class Game extends Canvas implements Runnable {
 
 	public synchronized void stop() {
 		running = false;
+		try {
+			AcreageThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 
@@ -145,7 +150,7 @@ public class Game extends Canvas implements Runnable {
 		setPlayer(new Player(this));
 		setInv(new Inventory(this));
 		debug = new Debug(this);
-		write = new Writing("C:/Users/Ryan/Desktop/temp.txt", this);
+		write = new Writing(this);
 	}
 
 	public void tick() {
