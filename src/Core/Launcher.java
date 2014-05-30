@@ -11,20 +11,22 @@ import javax.swing.UnsupportedLookAndFeelException;
 import FileManagement.Reading;
 
 public class Launcher extends JFrame implements ActionListener {
+	private static final long	serialVersionUID	= 1L;
+
 	// Path to load game from, if chosen
-	private String			filePath;
-	public static Reading	readFile;
+	//private String				filePath;
+	public static Reading		readFile;
 
 	// For the frame
-	int						screenWidth		= 275;
-	int						screenHeight	= 200;
+	int							screenWidth			= 275;
+	int							screenHeight		= 200;
 
 	// Buttons
-	private JButton			newGame, loadGame, exit;
+	private JButton				newGame, loadGame, exit;
 
 	// Button details
-	int						buttonWidth		= 150;
-	int						buttonHeight	= 40;
+	int							buttonWidth			= 150;
+	int							buttonHeight		= 40;
 
 	public Launcher() {
 		// Set layout to null, so each button can be placed arbitrarily (chosen coords)

@@ -167,24 +167,24 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			game.write.saveAllFiles();
 			new Launcher();
 		}
-		
+
 		// Select Tools
-		if(e.getKeyCode() == KeyEvent.VK_1){
+		if (e.getKeyCode() == KeyEvent.VK_1) {
 			Player.toolSelected = Player.Axe;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_2){
+		if (e.getKeyCode() == KeyEvent.VK_2) {
 			Player.toolSelected = Player.Pickaxe;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_3){
+		if (e.getKeyCode() == KeyEvent.VK_3) {
 			Player.toolSelected = Player.Hoe;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_4){
+		if (e.getKeyCode() == KeyEvent.VK_4) {
 			Player.toolSelected = Player.Shovel;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_5){
+		if (e.getKeyCode() == KeyEvent.VK_5) {
 			Player.toolSelected = Player.Hand;
 		}
-		
+
 	}
 
 	public void keyReleased(KeyEvent e) {
