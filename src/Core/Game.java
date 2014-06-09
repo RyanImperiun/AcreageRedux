@@ -40,9 +40,6 @@ public class Game extends Canvas implements Runnable {
 	private final Dimension		gameDim				= new Dimension(WIDTH, HEIGHT);
 	JFrame						frame;
 
-	public int					worldWidth			= 350;
-	public int					worldHeight			= 350;
-
 	public int					xOffset				= 0;
 	public int					yOffset				= 0;
 

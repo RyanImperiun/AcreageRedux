@@ -5,15 +5,18 @@ import java.util.Random;
 
 import Core.Game;
 import Core.GameResourceLoader;
+import Core.Launcher;
 import Entities.Player;
 
 public class LevelClass {
 	Game		game;
 	public Tile	tiles[];
+	int			totalWorldTiles;
 
 	public LevelClass(Game game) {
 		this.game = game;
-		tiles = new Tile[game.worldWidth * game.worldHeight];
+		totalWorldTiles = Launcher.worldSize * Launcher.worldSize;
+		tiles = new Tile[totalWorldTiles];
 	} // End constructor
 
 	private void determinePeripherals(Tile t, int periphID) {
@@ -44,7 +47,7 @@ public class LevelClass {
 	public void generateLevel(int[] tileIDs, int[] tilePeriph) {
 		int x = 0, y = 0;
 
-		for (int i = 0; i < 350 * 350; i++) {
+		for (int i = 0; i < totalWorldTiles; i++) {
 			switch (tileIDs[i]) { // Random int from 0 - 2, use as tileID
 			case 0:
 				tiles[i] = new DirtTile(x * 32, y * 32, game); // Place dirt
@@ -63,7 +66,7 @@ public class LevelClass {
 				break;
 			}
 			x++;
-			if (x == game.worldWidth) {
+			if (x == Launcher.worldSize) {
 				x = 0;
 				y++;
 			}
@@ -77,7 +80,7 @@ public class LevelClass {
 
 		int x = 0, y = 0;
 
-		for (int i = 0; i < game.worldWidth * game.worldHeight; i++) {
+		for (int i = 0; i < totalWorldTiles; i++) {
 			switch (new Random().nextInt(3)) { // Random int from 0 - 2, use as tileID
 			case 0:
 				tiles[i] = new DirtTile(x * 32, y * 32, game); // Place dirt
@@ -93,7 +96,7 @@ public class LevelClass {
 				break;
 			}
 			x++;
-			if (x == game.worldWidth) {
+			if (x == Launcher.worldSize) {
 				x = 0;
 				y++;
 			}
@@ -105,7 +108,6 @@ public class LevelClass {
 	} // End generateLevel
 
 	public void updateLevel(Game game) {
-		this.game = game;
 
 		for (Tile t : tiles) {
 			t.tick(game);
@@ -114,8 +116,9 @@ public class LevelClass {
 				rightClick(t);
 
 			if (game.getInput().leftButton && t.isContainsMouse())
-				leftClick(t);
+				t.onLeftClick();
 		}
+		game.getInput().leftButton = false;
 	} // End update
 
 	private void rightClick(Tile tile) { // if Right click
@@ -147,54 +150,19 @@ public class LevelClass {
 				if (!tile.isHasRock() && !tile.isHasTree()) { // If the tile is not stone and does not have a tree
 					game.getInv().addResource(game.getInv().stoneID, -1);
 					tile.setTileID(GameResourceLoader.Stone);
-					tile = new RoadTile(tile.getTileX(), tile.getTileY(), game);
 					tile.setHasRock(false);
 					tile.setHasOre(false);
+					tile = new RoadTile(tile.getTileX(), tile.getTileY(), game);
 				}
 			}
 		}
-		game.getInput().rightButton = false;
 	}
-
-	private void leftClick(Tile tile) { // If Left click
-		switch (tile.getTileID()) {
-		case 0: // Dirt
-			break;
-		case 1: // Plowed
-			if (!tile.hasPlants) {
-				tile.hasPlants = true;
-				game.getInv().resourceAmounts[game.getInv().seedID] -= 1;
-			} else if (tile.hasPlants && tile.getPlantGrowth() == tile.getGrowthTime()) {
-				game.getInv().addResource(game.getInv().wheatID, 1);
-				tile.hasPlants = false;
-				tile.setPlantGrowth(0);
-			}
-			break;
-		case 2: // Stone
-			if (tile.isHasRock() && Player.toolSelected == Player.Pickaxe && !tile.isHasOre()) {
-				game.getInv().addResource(game.getInv().stoneID, 1);
-				tile.setHasRock(false);
-			} else if (tile.isHasOre() && Player.toolSelected == Player.Pickaxe) {
-				game.getInv().addResource(game.getInv().oreID, 1);
-				tile.setOreAmount(tile.getOreAmount() - 1);
-			}
-			break;
-		case 3: // Grass
-			if (tile.isHasTree() && Player.toolSelected != Player.Axe) {
-				game.getInv().addResource(game.getInv().stickID, 1);
-			} else if (tile.isHasTree() && Player.toolSelected == Player.Axe) {
-				game.getInv().addResource(game.getInv().lumberID, 1);
-				tile.setHasTree(false);
-			}
-		} // End switch
-		game.getInput().leftButton = false;
-	} // End left-click
 
 	public void renderLevel(Graphics g) {
 		// Tile loops
 
 		for (Tile t : tiles) {
-			if (t.isVisible)
+			if (t.isVisible && t != null)
 				t.render(g);
 		}
 	} // End render

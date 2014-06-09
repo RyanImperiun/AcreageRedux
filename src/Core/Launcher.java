@@ -2,31 +2,40 @@ package Core;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import FileManagement.Reading;
 
-public class Launcher extends JFrame implements ActionListener {
+public class Launcher extends JFrame implements ActionListener, ItemListener {
 	private static final long	serialVersionUID	= 1L;
 
 	// Path to load game from, if chosen
-	//private String				filePath;
+	// private String filePath;
 	public static Reading		readFile;
 
 	// For the frame
 	int							screenWidth			= 275;
-	int							screenHeight		= 200;
+	int							screenHeight		= 220;
 
 	// Buttons
 	private JButton				newGame, loadGame, exit;
+	String[]					buttonTexts			= { "Start New Game", "Load Previous Game", "Exit"};
 
 	// Button details
 	int							buttonWidth			= 150;
 	int							buttonHeight		= 40;
+
+	// Selecting world dimensions
+	JComboBox					selectDimensions;
+	String[]					possibleDimensions	= { "100x100", "200x200", "300x300", "400x400", "500x500" };
+	public static int			worldSize			= 100;
 
 	public Launcher() {
 		// Set layout to null, so each button can be placed arbitrarily (chosen coords)
@@ -49,20 +58,41 @@ public class Launcher extends JFrame implements ActionListener {
 		newGame = new JButton("Start New Game");
 		loadGame = new JButton("Load Previous Game");
 		exit = new JButton("Exit");
+		selectDimensions = new JComboBox(possibleDimensions);
 
 		// Setting Bounds and Placing Buttons
-		newGame.setBounds((screenWidth - buttonWidth) / 2, 5, buttonWidth, buttonHeight);
-		loadGame.setBounds((screenWidth - buttonWidth) / 2, 50, buttonWidth, buttonHeight);
-		exit.setBounds((screenWidth - buttonWidth) / 2, 95, buttonWidth, buttonHeight);
+		selectDimensions.setBounds((screenWidth - buttonWidth) / 2, 5, buttonWidth, buttonHeight);
+		newGame.setBounds((screenWidth - buttonWidth) / 2, 50, buttonWidth, buttonHeight);
+		loadGame.setBounds((screenWidth - buttonWidth) / 2, 95, buttonWidth, buttonHeight);
+		exit.setBounds((screenWidth - buttonWidth) / 2, 140, buttonWidth, buttonHeight);
 
 		// Adding Buttons to Frame
+		getContentPane().add(selectDimensions);
 		getContentPane().add(newGame);
 		getContentPane().add(loadGame);
 		getContentPane().add(exit);
 
+		selectDimensions.addItemListener(this);
 		newGame.addActionListener(this);
 		loadGame.addActionListener(this);
 		exit.addActionListener(this);
+	}
+
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			if (e.getItem() == "100x100") {
+				worldSize = 100;
+			} else if (e.getItem() == "200x200") {
+				worldSize = 200;
+			} else if (e.getItem() == "300x300") {
+				worldSize = 300;
+			} else if (e.getItem() == "400x400") {
+				worldSize = 400;
+			} else if (e.getItem() == "500x500") {
+				worldSize = 500;
+			}
+			System.out.println(e.getItem());
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

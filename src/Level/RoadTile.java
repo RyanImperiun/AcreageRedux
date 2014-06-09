@@ -16,8 +16,6 @@ public class RoadTile extends Tile {
 	}
 
 	public void tick(Game game) {
-		this.game = game;
-
 		setX(getoX() - game.xOffset); // Current x after movement, Offset, etc
 		setY(getoY() - game.yOffset); // Current y after movement, Offset, etc
 		getTileBoundaries().setBounds(getX(), getY(), getTileSize(), getTileSize());
@@ -48,4 +46,8 @@ public class RoadTile extends Tile {
 		}
 	}
 
+	@Override
+	public void onLeftClick() {
+
+	}
 }

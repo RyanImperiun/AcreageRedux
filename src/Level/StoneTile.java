@@ -6,6 +6,7 @@ import java.util.Random;
 
 import Core.Game;
 import Core.GameResourceLoader;
+import Entities.Player;
 
 public class StoneTile extends Tile {
 
@@ -47,8 +48,6 @@ public class StoneTile extends Tile {
 	} // End Generate RockOre
 
 	public void tick(Game game) {
-		this.game = game;
-
 		setX(getoX() - game.xOffset); // Current x after movement, Offset, etc
 		setY(getoY() - game.yOffset); // Current y after movement, Offset, etc
 		getTileBoundaries().setBounds(getX(), getY(), getTileSize(), getTileSize());
@@ -74,7 +73,7 @@ public class StoneTile extends Tile {
 			g.drawImage(game.getRes().tiles[GameResourceLoader.Rock], getX(), getY(), game);
 		} else if (isHasRock() && isHasOre()) {
 			g.drawImage(game.getRes().tiles[GameResourceLoader.Metal], getX(), getY(), game);
-		}else{
+		} else {
 			g.drawImage(game.getRes().tiles[GameResourceLoader.Stone], getX(), getY(), game);
 		}
 
@@ -86,6 +85,17 @@ public class StoneTile extends Tile {
 		if (isContainsMouse() && isCanAffect()) { // If it is allowed to show borders
 			g.setColor(Color.BLACK); // Black color
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around image
+		}
+	}
+
+	@Override
+	public void onLeftClick() {
+		if (isHasRock() && Player.toolSelected == Player.Pickaxe && !isHasOre()) {
+			game.getInv().addResource(game.getInv().stoneID, 1);
+			setHasRock(false);
+		} else if (isHasOre() && Player.toolSelected == Player.Pickaxe) {
+			game.getInv().addResource(game.getInv().oreID, 1);
+			setOreAmount(getOreAmount() - 1);
 		}
 	}
 }

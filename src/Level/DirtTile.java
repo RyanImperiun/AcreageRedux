@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Core.Game;
+import Core.GameResourceLoader;
+import Entities.Player;
 
 public class DirtTile extends Tile {
 
@@ -17,8 +19,6 @@ public class DirtTile extends Tile {
 	}
 
 	public void tick(Game game) {
-		this.game = game;
-
 		setX(getoX() - game.xOffset); // Current x after movement, Offset, etc
 		setY(getoY() - game.yOffset); // Current y after movement, Offset, etc
 		getTileBoundaries().setBounds(getX(), getY(), getTileSize(), getTileSize());
@@ -47,5 +47,10 @@ public class DirtTile extends Tile {
 			g.setColor(Color.BLACK); // Black color
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around image
 		}
+	}
+
+	@Override
+	public void onLeftClick() {
+		
 	}
 }

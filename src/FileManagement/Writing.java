@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import Core.Game;
 import Core.GameResourceLoader;
+import Core.Launcher;
 
 public class Writing {
 	String	home	= System.getProperty("user.home");
@@ -102,6 +103,9 @@ public class Writing {
 
 			// Always wrap FileWriter in BufferedWriter.
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			
+			bufferedWriter.write(Integer.toString(Launcher.worldSize));
+			bufferedWriter.newLine();
 
 			for (int i = 0; i < g.level.tiles.length; i++) {
 				String toWrite = Integer.toString(g.level.tiles[i].getTileID());

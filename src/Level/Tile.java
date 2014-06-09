@@ -16,11 +16,6 @@ public abstract class Tile {
 
 	private boolean		canAffect	= true;
 
-	// Plowed tile
-	boolean				hasPlants	= false;
-	private int			plantGrowth	= 0;
-	private int			growthTime	= 4;
-
 	// Used for other images
 	public boolean		hasRock		= false;	// Stone tile
 	public boolean		hasOre		= false;	// Stone tile
@@ -34,6 +29,8 @@ public abstract class Tile {
 	public abstract void tick(Game game);
 
 	public abstract void render(Graphics g);
+
+	public abstract void onLeftClick();
 
 	protected void Visibility() { // Check if the tile is within the JFrame area
 		if (getX() >= 0 - 32 && getX() <= game.getWidth() + 32 && getY() >= 0 - 32 && getY() <= game.getHeight() + 32) {
@@ -80,22 +77,6 @@ public abstract class Tile {
 
 	public void setCanAffect(boolean canAffect) {
 		this.canAffect = canAffect;
-	}
-
-	public int getPlantGrowth() {
-		return plantGrowth;
-	}
-
-	public void setPlantGrowth(int plantGrowth) {
-		this.plantGrowth = plantGrowth;
-	}
-
-	public int getGrowthTime() {
-		return growthTime;
-	}
-
-	public void setGrowthTime(int growthTime) {
-		this.growthTime = growthTime;
 	}
 
 	public boolean isHasRock() {

@@ -126,7 +126,7 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 			if (game.inv.itemSelected > 0) {
 				game.inv.itemSelected--;
 			} else {
-				game.inv.itemSelected = game.inv.resourceAmounts.length;
+				game.inv.itemSelected = game.inv.resourceAmounts.length - 1;
 			}
 		}
 	}

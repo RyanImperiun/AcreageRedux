@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import Core.Game;
+import Core.Launcher;
 
 public class Player {
 	Game					game;
@@ -95,7 +96,7 @@ public class Player {
 			canLeft = true;
 		}
 
-		if (x + width >= (game.worldWidth * 32) - game.xOffset) {
+		if (x + width >= (Launcher.worldSize * 32) - game.xOffset) {
 			canRight = false;
 		} else {
 			canRight = true;
@@ -107,7 +108,7 @@ public class Player {
 			canUp = true;
 		}
 
-		if (y + height >= (game.worldHeight * 32) - game.yOffset) {
+		if (y + height >= (Launcher.worldSize * 32) - game.yOffset) {
 			canDown = false;
 		} else {
 			canDown = true;

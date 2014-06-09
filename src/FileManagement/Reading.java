@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import Core.Launcher;
+
 public class Reading {
 	String	home	= System.getProperty("user.home");
 	String	dir		= home + "/Desktop";
@@ -12,8 +14,8 @@ public class Reading {
 	String			fileName;
 	String			line;
 	int				i					= 0, ii = 0;
-	public int[]	fileTileID			= new int[350 * 350];
-	public int[]	fileTilePeripherals	= new int[350 * 350];
+	public int[]	fileTileID			= new int[Launcher.worldSize * Launcher.worldSize];
+	public int[]	fileTilePeripherals	= new int[Launcher.worldSize * Launcher.worldSize];
 
 	public Reading(String filePath) {
 		fileName = filePath;
@@ -45,7 +47,7 @@ public class Reading {
 
 			// Always wrap FileReader in BufferedReader.
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
+			
 			while ((line = bufferedReader.readLine()) != null) {
 				fileTilePeripherals[ii] = Integer.parseInt(line);
 				ii++;
@@ -76,6 +78,11 @@ public class Reading {
 
 			// Always wrap FileReader in BufferedReader.
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			int worldSize = Integer.parseInt(bufferedReader.readLine());
+			System.out.println(worldSize);
+			fileTileID			= new int[worldSize * worldSize];
+			fileTilePeripherals	= new int[worldSize * worldSize];
 
 			while ((line = bufferedReader.readLine()) != null) {
 				fileTileID[i] = Integer.parseInt(line);
