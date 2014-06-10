@@ -4,14 +4,12 @@ import java.awt.Graphics;
 import java.util.Random;
 
 import Core.Game;
-import Core.GameResourceLoader;
 import Core.Launcher;
-import Entities.Player;
 
 public class LevelClass {
-	Game		game;
-	public Tile	tiles[];
-	int			totalWorldTiles;
+	Game				game;
+	public static Tile	tiles[];
+	int					totalWorldTiles;
 
 	public LevelClass(Game game) {
 		this.game = game;
@@ -113,50 +111,14 @@ public class LevelClass {
 			t.tick(game);
 
 			if (game.getInput().rightButton && t.isContainsMouse())
-				rightClick(t);
+				t.onRightClick();
 
 			if (game.getInput().leftButton && t.isContainsMouse())
 				t.onLeftClick();
 		}
 		game.getInput().leftButton = false;
+		game.getInput().rightButton = false;
 	} // End update
-
-	private void rightClick(Tile tile) { // if Right click
-		switch (Player.toolSelected) {
-		case 1: // Axe
-			break;
-		case 2: // Pickaxe
-			if (tile.getTileID() == GameResourceLoader.Stone && !tile.isHasRock()) {
-				tile.setTileID(GameResourceLoader.Dirt);
-				tile = new DirtTile(tile.getTileX(), tile.getTileY(), game);
-			}
-			break;
-		case 3: // Hoe
-			if (!tile.isHasTree()) {
-				if (tile.getTileID() == GameResourceLoader.Grass || tile.getTileID() == GameResourceLoader.Dirt) {
-					tile.setTileID(GameResourceLoader.Plowed);
-					tile = new PlowedTile(tile.getTileX(), tile.getTileY(), game);
-				}
-			}
-			break;
-		case 4: // Shovel
-			if (!tile.isHasTree() && tile.getTileID() == GameResourceLoader.Grass) {
-				tile.setTileID(GameResourceLoader.Dirt);
-				tile = new DirtTile(tile.getTileX(), tile.getTileY(), game);
-			}
-			break;
-		case 5: // Hand
-			if (game.getInv().itemSelected == game.getInv().stoneID && game.getInv().resourceAmounts[game.getInv().stoneID] > 0) {
-				if (!tile.isHasRock() && !tile.isHasTree()) { // If the tile is not stone and does not have a tree
-					game.getInv().addResource(game.getInv().stoneID, -1);
-					tile.setTileID(GameResourceLoader.Stone);
-					tile.setHasRock(false);
-					tile.setHasOre(false);
-					tile = new RoadTile(tile.getTileX(), tile.getTileY(), game);
-				}
-			}
-		}
-	}
 
 	public void renderLevel(Graphics g) {
 		// Tile loops

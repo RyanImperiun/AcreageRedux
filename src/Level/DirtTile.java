@@ -5,11 +5,13 @@ import java.awt.Graphics;
 
 import Core.Game;
 import Core.GameResourceLoader;
+import Core.Launcher;
 import Entities.Player;
 
 public class DirtTile extends Tile {
 
 	public DirtTile(int x, int y, Game game) {
+		tileID = GameResourceLoader.Dirt;
 		this.game = game;
 		this.setoX(x);
 		this.setoY(y);
@@ -43,7 +45,7 @@ public class DirtTile extends Tile {
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around tile
 		}
 
-		if (isContainsMouse() && isCanAffect()) { // If it is allowed to show borders
+		if (isContainsMouse()) { // If it is allowed to show borders
 			g.setColor(Color.BLACK); // Black color
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around image
 		}
@@ -51,6 +53,11 @@ public class DirtTile extends Tile {
 
 	@Override
 	public void onLeftClick() {
-		
+	}
+
+	@Override
+	public void onRightClick() {
+		if (Player.toolSelected == Player.Hoe)
+			editTile(LevelClass.tiles, (tileY * Launcher.worldSize) + tileX, new PlowedTile(oX, oY, game));
 	}
 }

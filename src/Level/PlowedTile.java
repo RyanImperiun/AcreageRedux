@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import Core.Game;
+import Core.GameResourceLoader;
 
 public class PlowedTile extends Tile {
 
@@ -13,6 +14,7 @@ public class PlowedTile extends Tile {
 	int		plantGrowTicks	= 0;
 
 	public PlowedTile(int x, int y, Game game) {
+		tileID = GameResourceLoader.Plowed;
 		this.game = game;
 		this.setoX(x);
 		this.setoY(y);
@@ -76,4 +78,9 @@ public class PlowedTile extends Tile {
 			plantGrowth = 0;
 		}
 	}
+	
+	@Override
+	public void onRightClick() {
+	}
+
 }

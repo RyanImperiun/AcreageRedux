@@ -6,11 +6,12 @@ import java.util.Random;
 
 import Core.Game;
 import Core.GameResourceLoader;
+import Core.Launcher;
 import Entities.Player;
 
 public class GrassTile extends Tile {
-
 	public GrassTile(int x, int y, Game game) {
+		tileID = GameResourceLoader.Grass;
 		this.game = game;
 		setoX(x);
 		setoY(y);
@@ -20,10 +21,10 @@ public class GrassTile extends Tile {
 
 		switch (new Random().nextInt(2)) {
 		case 0:
-			setHasTree(true);
+			hasTree = true;
 			break;
 		case 1:
-			setHasTree(false);
+			hasTree = false;
 			break;
 		}
 	}
@@ -47,7 +48,7 @@ public class GrassTile extends Tile {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(game.getRes().tiles[GameResourceLoader.Grass], getX(), getY(), game);
-		if (isHasTree()) {
+		if (hasTree) {
 			g.drawImage(game.getRes().tiles[GameResourceLoader.Tree], getX(), getY(), game);
 		}
 
@@ -56,7 +57,7 @@ public class GrassTile extends Tile {
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around tile
 		}
 
-		if (isContainsMouse() && isCanAffect()) { // If it is allowed to show borders
+		if (isContainsMouse()) { // If it is allowed to show borders
 			g.setColor(Color.BLACK); // Black color
 			g.drawRect(getX(), getY(), getTileSize() - 1, getTileSize() - 1); // Draw a border around image
 		}
@@ -64,11 +65,22 @@ public class GrassTile extends Tile {
 
 	@Override
 	public void onLeftClick() {
-		if (isHasTree() && Player.toolSelected == Player.Hand) {
+		if (hasTree && Player.toolSelected == Player.Hand) {
 			game.getInv().addResource(game.getInv().stickID, 1);
-		} else if (isHasTree() && Player.toolSelected == Player.Axe) {
+		} else if (hasTree && Player.toolSelected == Player.Axe) {
 			game.getInv().addResource(game.getInv().lumberID, 1);
-			setHasTree(false);
+			hasTree = false;
+		}
+	}
+
+	@Override
+	public void onRightClick() {
+		if (!hasTree) {
+			if (Player.toolSelected == Player.Shovel)
+				editTile(LevelClass.tiles, (tileY * Launcher.worldSize) + tileX, new DirtTile(oX, oY, game));
+			if (Player.toolSelected == Player.Hoe)
+				editTile(LevelClass.tiles, (tileY * Launcher.worldSize) + tileX, new PlowedTile(oX, oY, game));
+		}else{
 		}
 	}
 }
